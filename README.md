@@ -2,6 +2,10 @@
 
 UYAP E-Satış portalındaki ihale detay sayfalarından bitiş tarihini otomatik okuyarak, belirlediğiniz gün kadar önce Apple Calendar veya Google Calendar'a hatırlatma etkinliği eklemenizi sağlayan Chrome eklentisi.
 
+## Ekran Görüntüsü
+
+![Eklenti Popup](screenshots/popup.png)
+
 ## Özellikler
 
 - Sayfadan ihale bitiş tarihi, muhammen bedel gibi bilgileri otomatik çeker
