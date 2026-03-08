@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      width: 360px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #f8f9fa;
+      color: #333;
+    }
+    .header {
+      background: linear-gradient(135deg, #e67e22, #d35400);
+      color: white;
+      padding: 16px;
+      text-align: center;
+    }
+    .header h1 {
+      font-size: 15px;
+      font-weight: 600;
+    }
+    .content {
+      padding: 16px;
+    }
+    .info-box {
+      background: white;
+      border-radius: 8px;
+      padding: 14px;
+      margin-bottom: 12px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 6px 0;
+      font-size: 13px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .info-row:last-child { border-bottom: none; }
+    .info-label { color: #888; }
+    .info-value { font-weight: 600; text-align: right; max-width: 200px; }
+    .reminder-date {
+      background: #fff3e0;
+      border-left: 3px solid #e67e22;
+      padding: 10px 14px;
+      border-radius: 4px;
+      margin-bottom: 12px;
+      font-size: 13px;
+    }
+    .reminder-date strong { color: #d35400; }
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-bottom: 8px;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #e67e22, #d35400);
+      color: white;
+    }
+    .btn-apple {
+      background: linear-gradient(135deg, #333, #111);
+      color: white;
+    }
+    .btn:hover { opacity: 0.9; }
+    .btn:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+    .error {
+      text-align: center;
+      padding: 30px 16px;
+      color: #888;
+      font-size: 13px;
+    }
+    .error svg { margin-bottom: 10px; }
+    .success {
+      text-align: center;
+      padding: 10px;
+      color: #27ae60;
+      font-size: 13px;
+      font-weight: 600;
+      display: none;
+    }
+    .form-group {
+      margin-bottom: 12px;
+    }
+    .form-group label {
+      display: block;
+      font-size: 12px;
+      color: #888;
+      margin-bottom: 4px;
+    }
+    .form-group input, .form-group textarea {
+      width: 100%;
+      padding: 8px 10px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 13px;
+      font-family: inherit;
+    }
+    .form-group textarea {
+      resize: vertical;
+      min-height: 60px;
+    }
+    .days-input {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+      font-size: 13px;
+    }
+    .days-input input {
+      width: 50px;
+      padding: 6px 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      text-align: center;
+      font-size: 13px;
+    }
+    .btn-group-label {
+      font-size: 12px;
+      color: #888;
+      margin-bottom: 6px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>İhale Takvim Hatırlatıcı</h1>
+  </div>
+
+  <div class="content" id="main-content">
+    <div class="error" id="error-state" style="display:none;">
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+      <p>Bu sayfa bir ihale sayfası değil veya ihale bilgileri bulunamadı.</p>
+      <p style="margin-top:8px; font-size:12px; color:#aaa;">E-Satış ihale detay sayfasında olduğunuzdan emin olun.</p>
+    </div>
+
+    <div id="data-state" style="display:none;">
+      <div class="info-box">
+        <div class="info-row">
+          <span class="info-label">Bitiş Tarihi</span>
+          <span class="info-value" id="bitis-tarihi">-</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Muhammen Bedel</span>
+          <span class="info-value" id="muhammen-bedel">-</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="etkinlik-baslik">Etkinlik Başlığı</label>
+        <input type="text" id="etkinlik-baslik" placeholder="Etkinlik başlığı">
+      </div>
+
+      <div class="form-group">
+        <label for="etkinlik-not">Not (opsiyonel)</label>
+        <textarea id="etkinlik-not" placeholder="Ekstra notlar..."></textarea>
+      </div>
+
+      <div class="days-input">
+        <label for="gun-oncesi">Hatırlatma:</label>
+        <input type="number" id="gun-oncesi" value="2" min="1" max="30">
+        <span>gün önce</span>
+      </div>
+
+      <div class="reminder-date">
+        Takvime eklenecek tarih: <strong id="hatirlatma-tarihi">-</strong>
+      </div>
+
+      <div class="btn-group-label">Takvime ekle:</div>
+      <button class="btn btn-apple" id="apple-btn">Apple Calendar</button>
+      <button class="btn btn-primary" id="google-btn">Google Calendar</button>
+      <div class="success" id="success-msg">Takvim açıldı!</div>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
