@@ -2,18 +2,23 @@
 
 UYAP E-Satış portalındaki ihale detay sayfalarından bitiş tarihini otomatik okuyarak, belirlediğiniz gün kadar önce Apple Calendar veya Google Calendar'a hatırlatma etkinliği eklemenizi sağlayan Chrome eklentisi.
 
-## Ekran Görüntüsü
+## Ekran Görüntüleri
 
 ![Eklenti Popup](screenshots/popup.png)
 
+![Sayfa İçi Panel](screenshots/popup2.png)
+
 ## Özellikler
 
-- Sayfadan ihale bitiş tarihi, muhammen bedel gibi bilgileri otomatik çeker
+- İhale detay sayfasında sağ altta otomatik panel açılır
+- Sayfadan ihale bitiş tarihi, muhammen bedel, teminat miktarı gibi bilgileri otomatik çeker
+- Akıllı etkinlik başlığı: **yer - bedel - tarih** formatında otomatik oluşturulur (ör. `Bursa Banka Alacakları - 714.000,00 TL - 10/03/2026`)
 - Kaç gün önce hatırlatma istediğinizi seçebilirsiniz (varsayılan: 2 gün)
-- Etkinlik başlığını ve notları özelleştirebilirsiniz
-- **Apple Calendar** desteği (.ics dosyası ile)
+- Etkinlik başlığını panelden özelleştirebilirsiniz
+- **Teminat hatırlatması**: Teminat yatırma son tarihinden 1 gün önce ayrı hatırlatma oluşturur
+- **Apple Calendar** desteği (.ics dosyası ile, 30 dk öncesi alarm dahil)
 - **Google Calendar** desteği (tarayıcıda açılır)
-- Etkinliğe otomatik 30 dakika öncesi alarm eklenir (Apple Calendar)
+- Panel başlığına tıklayarak küçültüp açabilirsiniz
 
 ## Kurulum
 
@@ -27,17 +32,17 @@ UYAP E-Satış portalındaki ihale detay sayfalarından bitiş tarihini otomatik
 
 1. [UYAP E-Satış](https://esatis.uyap.gov.tr) portalına giriş yapın
 2. Herhangi bir ihale detay sayfasını açın
-3. Tarayıcı araç çubuğundaki eklenti ikonuna tıklayın
-4. İhale bilgileri otomatik olarak yüklenir
-5. Başlık ve notları düzenleyin, hatırlatma gün sayısını ayarlayın
-6. **Apple Calendar** veya **Google Calendar** butonuna tıklayın
+3. Sağ altta **Takvime Ekle** paneli otomatik olarak açılır
+4. Başlığı düzenleyin, hatırlatma gün sayısını ayarlayın
+5. **Apple Calendar** veya **Google Calendar** butonuna tıklayın
+6. Teminat hatırlatması için ayrı butonları kullanın
 
 ## Dosya Yapısı
 
 ```
 ihale/
 ├── manifest.json    # Chrome extension tanımı
-├── content.js       # Sayfadan ihale verisi çeken script
+├── content.js       # Sayfadan ihale verisi çeken ve panel inject eden script
 ├── popup.html       # Popup arayüzü
 ├── popup.js         # Takvim ekleme mantığı
 └── icons/           # Eklenti ikonları

@@ -6,7 +6,7 @@
   "permissions": ["activeTab"],
   "content_scripts": [
     {
-      "matches": ["*://esatis.uyap.gov.tr/*"],
+      "matches": ["*://*.uyap.gov.tr/*", "*://esatis.uyap.gov.tr/*"],
       "js": ["content.js"]
     }
   ],
